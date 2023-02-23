@@ -30,7 +30,6 @@ public class Review {
 	}
 
 	public Review(String text, String rating, LocalDateTime createdDateTime) {
-		super();
 		this.text = text;
 		this.rating = rating;
 		this.createdDateTime = createdDateTime;

@@ -16,28 +16,36 @@ import com.crescendo.repository.ReviewRepository;
 public class ReviewServiceImpl implements IReviewService {
 	@Autowired
 	ReviewRepository reviewRepository;
-	
+
 	@Autowired
 	BusinessRepository businessRepository;
 
 	@Override
 	public List<Review> getAllReviewByBusinessId(int businessId) {
-		Business business = businessRepository.findById(businessId).orElseThrow(
-				() -> new ResourceNotFoundException("Business ID Not found = " + businessId));
-		
-		List<Review> reviews = new ArrayList<Review>();
+		Business business = businessRepository.findById(businessId)
+				.orElseThrow(() -> new ResourceNotFoundException("Business ID Not found = " + businessId));
+
+		List<Review> reviews = new ArrayList<>();
 		reviews.addAll(business.getReviews());
 		return reviews;
 	}
 
 	@Override
 	public Review addReviewByBusinessId(int businessId, Review reviewRequest) {
-		Review review = businessRepository.findById(businessId).map(business -> {
+		return businessRepository.findById(businessId).map(business -> {
 			business.getReviews().add(reviewRequest);
 			return reviewRepository.save(reviewRequest);
 		}).orElseThrow(() -> new ResourceNotFoundException("Business ID Not found = " + businessId));
-		
-		return review;
+	}
+
+	@Override
+	public Review updateReviewById(int reviewId, Review review) {
+		Review updateReview = reviewRepository.findById(reviewId)
+				.orElseThrow(() -> new ResourceNotFoundException("Review ID Not found = " + reviewId));
+		updateReview.setText(review.getText());
+		updateReview.setRating(review.getRating());
+		updateReview.setCreatedDateTime(review.getCreatedDateTime());
+		return reviewRepository.save(updateReview);
 	}
 
 }

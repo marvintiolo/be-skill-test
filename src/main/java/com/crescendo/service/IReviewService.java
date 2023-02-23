@@ -7,4 +7,5 @@ import com.crescendo.model.Review;
 public interface IReviewService {
 	public List<Review> getAllReviewByBusinessId(int businessId);
 	public Review addReviewByBusinessId(int businessId, Review review);
+	public Review updateReviewById(int reviewId, Review review);
 }

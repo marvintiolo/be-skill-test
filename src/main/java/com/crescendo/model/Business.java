@@ -33,7 +33,7 @@ public class Business {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "business_id")
-	private Set<Review> reviews = new HashSet<Review>();
+	private Set<Review> reviews = new HashSet<>();
 
 	public Business() {
 	}
